@@ -1,0 +1,39 @@
+﻿>>> INICIANDO SISTEMA DE GESTI�N DE SOLICITUDES ACAD�MICAS (SGA) <<<
+
+--- 1. REGISTRO DE SOLICITUDES ACAD�MICAS ---
+[NOTIF-EMAIL -> amartinez@est.utn.edu.ar] Solicitud SOL-101 (EQUIVALENCIA) registrada con estado PENDIENTE y prioridad ALTA.
+[NOTIF-WHATSAPP -> Lucas Ezequiel Torres] Solicitud SOL-102 (CERTIFICADO) registrada con estado PENDIENTE y prioridad ALTA.
+[NOTIF-SMS -> Valentina Rojas] Solicitud SOL-103 (EXCEPCION) registrada con estado PENDIENTE y prioridad MEDIA.
+[NOTIF-EMAIL -> mdiaz@est.utn.edu.ar] Solicitud SOL-104 (BAJA) registrada con estado PENDIENTE y prioridad BAJA.
+
+--- 2. ASIGNACI�N DE RESPONSABLES Y VALIDACI�N DE REGLAS ---
+[NOTIF-EMAIL -> amartinez@est.utn.edu.ar] Solicitud SOL-101 asignada a Dra. Laura M�ndez (Secretar�a Acad�mica). Estado actual: EN_REVISION.
+[NOTIF-WHATSAPP -> Lucas Ezequiel Torres] Solicitud SOL-102 asignada a Lic. Carlos G�mez (Departamento de Alumnos). Estado actual: EN_REVISION.
+[RECHAZO-ASIGNACION] Responsable Ing. Mart�n Silva sin cupo disponible (1/1).
+[RECHAZO-ASIGNACION] El �rea 'Departamento de Alumnos' no gestiona solicitudes de tipo EXCEPCION.
+[NOTIF-SMS -> Valentina Rojas] Solicitud SOL-103 asignada a Dra. Laura M�ndez (Secretar�a Acad�mica). Estado actual: EN_REVISION.
+
+--- 3. CAMBIO DE ESTADOS Y CONTROL DE TRANSICIONES ---
+[NOTIF-EMAIL -> amartinez@est.utn.edu.ar] Solicitud SOL-101 cambi� a estado APROBADA. Resoluci�n: Equivalencia otorgada seg�n Disposici�n Acad�mica N� 44/26.
+[NOTIF-WHATSAPP -> Lucas Ezequiel Torres] Solicitud SOL-102 cambi� a estado APROBADA. Resoluci�n: Certificado emitido con firma digital.
+[TRANSICION-INVALIDA] La solicitud SOL-101 ya se encuentra cerrada (APROBADA).
+[TRANSICION-INVALIDA] La solicitud SOL-104 debe pasar por EN_REVISION antes de resolverse.
+
+--- 4. B�SQUEDA Y FILTRADO DE SOLICITUDES ---
+Solicitudes encontradas con Prioridad ALTA: 2
+  * SOL-101 - Ana Sof�a Mart�nez (EQUIVALENCIA) -> Estado: APROBADA
+  * SOL-102 - Lucas Ezequiel Torres (CERTIFICADO) -> Estado: APROBADA
+Solicitudes encontradas en estado EN_REVISION: 1
+  * SOL-103 - Valentina Rojas (EXCEPCION) -> Responsable: Dra. Laura M�ndez
+
+--- 5. REPORTE GENERAL Y CONTROL DE SLA ---
+================================================================================
+              REPORTE GENERAL DE SOLICITUDES ACAD�MICAS (SGA)                   
+================================================================================
+- [SOL-101] EQUIVALENCIA  | Est: Ana Sof�a Mart�nez (LEG-28401) | Prio: ALTA  | Estado: APROBADA    | Resp: Dra. Laura M�ndez | [SLA OK: 6/15 d�as]
+- [SOL-102] CERTIFICADO   | Est: Lucas Ezequiel Torres (LEG-29110) | Prio: ALTA  | Estado: APROBADA    | Resp: Lic. Carlos G�mez | [SLA OK: 3/2 d�as]
+- [SOL-103] EXCEPCION     | Est: Valentina Rojas (LEG-30045) | Prio: MEDIA | Estado: EN_REVISION | Resp: Dra. Laura M�ndez | [SLA VENCIDO: 9/7 d�as]
+- [SOL-104] BAJA          | Est: Mateo Nicol�s D�az (LEG-31200) | Prio: BAJA  | Estado: PENDIENTE   | Resp: SIN_ASIGNAR      | [SLA OK: 2/5 d�as]
+--------------------------------------------------------------------------------
+TOTAL: 4 | PENDIENTES: 1 | EN_REVISION: 1 | APROBADAS: 2 | RECHAZADAS: 0 | SLA VENCIDOS: 1
+================================================================================
