@@ -2,7 +2,7 @@
 
 **Proyecto:** Sistema de Gestión de Solicitudes Académicas (SGA)  
 **Materia:** Metodología de Sistemas II — Tecnicatura Universitaria en Programación a Distancia (UTN)  
-**Estudiante:** Ruidiaz, Emanuel Facundo (Comisión 15 — Modalidad Individual)  
+**Integrantes:** Ruidiaz, Emanuel Facundo | Roques Zeballos, Juan Martín (Comisión 15)  
 **Versión analizada:** Tag `estado-inicial`
 
 ---
