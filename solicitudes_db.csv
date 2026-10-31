@@ -1,0 +1,5 @@
+ID;LEGAJO;ESTUDIANTE;TIPO;PRIORIDAD;ESTADO;RESPONSABLE;DIAS;URGENTE;OBSERVACIONES
+SOL-101;LEG-28401;Ana Sofía Martínez;EQUIVALENCIA;1;APROBADA;Dra. Laura Méndez;6;false;Equivalencia otorgada según Disposición Académica N° 44/26.
+SOL-102;LEG-29110;Lucas Ezequiel Torres;CERTIFICADO;1;APROBADA;Lic. Carlos Gómez;3;true;Certificado emitido con firma digital.
+SOL-103;LEG-30045;Valentina Rojas;EXCEPCION;2;EN_REVISION;Dra. Laura Méndez;9;false;
+SOL-104;LEG-31200;Mateo Nicolás Díaz;BAJA;3;PENDIENTE;SIN_ASIGNAR;2;false;
