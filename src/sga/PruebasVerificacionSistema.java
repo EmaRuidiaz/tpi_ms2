@@ -64,9 +64,22 @@ public class PruebasVerificacionSistema {
         ejecutarPrueba("CP-10: Filtrado combinado y validaciones defensivas (Guard Clauses)",
                 PruebasVerificacionSistema::probarFiltradoYValidacionesDefensivas);
 
+        ejecutarPrueba("CP-11: PENDIENTE no pasa a EN_REVISION manualmente sin asignar responsable",
+                PruebasVerificacionSistema::probarBloqueoRevisionSinResponsable);
+
+        ejecutarPrueba("CP-12: Reasignación libera la carga del responsable anterior",
+                PruebasVerificacionSistema::probarReasignacionLiberaCarga);
+
+        ejecutarPrueba("CP-13: Rechazo de asignación sobre solicitud cerrada sin consumir cupo",
+                PruebasVerificacionSistema::probarRechazoAsignacionSolicitudCerrada);
+
+        ejecutarPrueba("CP-14: Rechazo de registro con ID de solicitud duplicado",
+                PruebasVerificacionSistema::probarRechazoIdDuplicado);
+
+        int porcentajeExito = pruebasEjecutadas == 0 ? 0 : (pruebasExitosas * 100) / pruebasEjecutadas;
         System.out.println("\n--------------------------------------------------------------------------------");
-        System.out.printf("RESUMEN DE EJECUCIÓN: %d/%d pruebas superadas exitosamente (100%% PASS)%n",
-                pruebasExitosas, pruebasEjecutadas);
+        System.out.printf("RESUMEN DE EJECUCIÓN: %d/%d pruebas superadas exitosamente (%d%% PASS)%n",
+                pruebasExitosas, pruebasEjecutadas, porcentajeExito);
         System.out.println("================================================================================");
 
         if (pruebasExitosas != pruebasEjecutadas) {
@@ -257,6 +270,89 @@ public class PruebasVerificacionSistema {
             capturoExcepcionPromedio = true;
         }
         verificar(capturoExcepcionPromedio, "Guard Clause debe rechazar promedio mayor a 10.0");
+    }
+
+    private static void probarBloqueoRevisionSinResponsable() {
+        RepositorioSolicitudes repo = new RepositorioSolicitudesMemoria();
+        GestorSolicitudes gestor = new GestorSolicitudes(repo, new NotificacionSpy());
+
+        Estudiante est = new Estudiante("LEG-110", "Bruno Sosa", "bsosa@est.utn.edu.ar", "TUPaD", 11, 7.20);
+        gestor.registrarSolicitud(new DatosRegistroSolicitud(
+                "SOL-11", est, TipoSolicitud.BAJA, PrioridadSolicitud.BAJA, "Baja temporal", 1, false
+        ));
+
+        boolean pasoARevision = gestor.cambiarEstadoSolicitud("SOL-11", EstadoSolicitud.EN_REVISION, "Revisión manual");
+        boolean aprobada = gestor.cambiarEstadoSolicitud("SOL-11", EstadoSolicitud.APROBADA, "Aprobación sin responsable");
+
+        Solicitud sol = repo.buscarPorId("SOL-11");
+        verificar(!pasoARevision, "No debe permitir pasar a EN_REVISION sin asignar responsable");
+        verificar(!aprobada, "No debe permitir aprobar una solicitud sin responsable asignado");
+        verificar(sol.getEstado() == EstadoSolicitud.PENDIENTE, "La solicitud debe seguir PENDIENTE");
+    }
+
+    private static void probarReasignacionLiberaCarga() {
+        RepositorioSolicitudes repo = new RepositorioSolicitudesMemoria();
+        GestorSolicitudes gestor = new GestorSolicitudes(repo, new NotificacionSpy());
+
+        Estudiante est = new Estudiante("LEG-111", "Irene Gil", "igil@est.utn.edu.ar", "TUPaD", 13, 7.60);
+        gestor.registrarSolicitud(new DatosRegistroSolicitud(
+                "SOL-12", est, TipoSolicitud.EQUIVALENCIA, PrioridadSolicitud.MEDIA, "Homologación", 2, false
+        ));
+
+        Responsable primero = new Responsable("R-06", "Dra. Méndez", "Secretaría Académica", "mendez@utn.edu.ar", 0, 2);
+        Responsable segundo = new Responsable("R-07", "Ing. Silva", "Dirección de Carrera", "silva@utn.edu.ar", 0, 2);
+        gestor.asignarResponsable("SOL-12", primero);
+        boolean reasignado = gestor.asignarResponsable("SOL-12", segundo);
+        boolean mismaAsignacion = gestor.asignarResponsable("SOL-12", segundo);
+
+        verificar(reasignado, "La reasignación a otro responsable compatible debe ser exitosa");
+        verificar(primero.getCargaActual() == 0, "El responsable anterior debe liberar su carga (0)");
+        verificar(segundo.getCargaActual() == 1, "El nuevo responsable debe sumar la carga (1)");
+        verificar(!mismaAsignacion, "Reasignar al mismo responsable no debe volver a sumar carga");
+        verificar(segundo.getCargaActual() == 1, "La carga del mismo responsable debe permanecer en 1");
+    }
+
+    private static void probarRechazoAsignacionSolicitudCerrada() {
+        RepositorioSolicitudes repo = new RepositorioSolicitudesMemoria();
+        GestorSolicitudes gestor = new GestorSolicitudes(repo, new NotificacionSpy());
+
+        Estudiante est = new Estudiante("LEG-112", "Tomás Vidal", "tvidal@est.utn.edu.ar", "TUPaD", 16, 7.40);
+        gestor.registrarSolicitud(new DatosRegistroSolicitud(
+                "SOL-13", est, TipoSolicitud.CERTIFICADO, PrioridadSolicitud.MEDIA, "Certificado", 1, false
+        ));
+        Responsable resp = new Responsable("R-08", "Lic. Gómez", "Departamento de Alumnos", "gomez@utn.edu.ar", 0, 3);
+        gestor.asignarResponsable("SOL-13", resp);
+        gestor.cambiarEstadoSolicitud("SOL-13", EstadoSolicitud.APROBADA, "Emitido");
+
+        Responsable otro = new Responsable("R-09", "Ing. Silva", "Dirección de Carrera", "silva@utn.edu.ar", 0, 2);
+        boolean asignado = gestor.asignarResponsable("SOL-13", otro);
+
+        verificar(!asignado, "No debe permitir asignar responsable a una solicitud APROBADA");
+        verificar(otro.getCargaActual() == 0, "El responsable rechazado no debe consumir cupo");
+        verificar(repo.buscarPorId("SOL-13").getResponsable() == resp, "Debe conservarse el responsable original");
+    }
+
+    private static void probarRechazoIdDuplicado() {
+        RepositorioSolicitudes repo = new RepositorioSolicitudesMemoria();
+        NotificacionSpy spy = new NotificacionSpy();
+        GestorSolicitudes gestor = new GestorSolicitudes(repo, spy);
+
+        Estudiante est = new Estudiante("LEG-113", "Paula Ríos", "prios@est.utn.edu.ar", "TUPaD", 7, 6.50);
+        DatosRegistroSolicitud datos = new DatosRegistroSolicitud(
+                "SOL-14", est, TipoSolicitud.BAJA, PrioridadSolicitud.BAJA, "Baja temporal", 1, false
+        );
+        gestor.registrarSolicitud(datos);
+
+        boolean capturoDuplicado = false;
+        try {
+            gestor.registrarSolicitud(datos);
+        } catch (IllegalStateException ex) {
+            capturoDuplicado = true;
+        }
+
+        verificar(capturoDuplicado, "Debe rechazarse el registro de un ID ya existente");
+        verificar(repo.obtenerTodas().size() == 1, "El repositorio debe contener una única solicitud");
+        verificar(spy.cantidadNotificaciones() == 1, "No debe notificarse el registro rechazado");
     }
 
     private static void verificar(boolean condicion, String mensajeError) {
