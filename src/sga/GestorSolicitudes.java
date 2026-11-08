@@ -159,6 +159,18 @@ public class GestorSolicitudes {
     }
 
     private boolean validarAsignacionResponsable(Solicitud solicitud, Responsable responsable) {
+        if (solicitud.getEstado().estaCerrada()) {
+            System.out.println("[RECHAZO-ASIGNACION] La solicitud " + solicitud.getId()
+                    + " ya se encuentra cerrada (" + solicitud.getEstado().name() + ").");
+            return false;
+        }
+
+        if (solicitud.getResponsable() == responsable) {
+            System.out.println("[RECHAZO-ASIGNACION] La solicitud " + solicitud.getId()
+                    + " ya está asignada a " + responsable.getNombre() + ".");
+            return false;
+        }
+
         if (!responsable.tieneCupoDisponible()) {
             System.out.println("[RECHAZO-ASIGNACION] Responsable " + responsable.getNombre()
                     + " sin cupo disponible (" + responsable.getCargaActual()
@@ -185,6 +197,12 @@ public class GestorSolicitudes {
         if (estadoActual.requiereRevisionPreviaPara(nuevoEstado)) {
             System.out.println("[TRANSICION-INVALIDA] La solicitud " + solicitud.getId()
                     + " debe pasar por EN_REVISION antes de resolverse.");
+            return false;
+        }
+        if (!estadoActual.puedeTransicionarA(nuevoEstado)) {
+            System.out.println("[TRANSICION-INVALIDA] La solicitud " + solicitud.getId()
+                    + " no puede pasar de " + estadoActual.name() + " a " + nuevoEstado.name()
+                    + " (EN_REVISION solo se alcanza al asignar un responsable).");
             return false;
         }
         return true;

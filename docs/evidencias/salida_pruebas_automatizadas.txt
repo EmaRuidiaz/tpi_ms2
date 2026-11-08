@@ -1,22 +1,30 @@
-================================================================================
-     SUITE DE PRUEBAS AUTOMATIZADAS DE VERIFICACI�N � SGA (TPI MS II)           
-================================================================================
-
-[PASS] CP-01: Registro est�ndar conserva prioridad base y estado PENDIENTE
-[PASS] CP-02: Prioridad ALTA autom�tica por m�rito acad�mico (>=20 mat y prom >=8.0)
-[PASS] CP-03: Escalamiento de prioridad en solicitud urgente (BAJA -> MEDIA)
-[PASS] CP-04: Asignaci�n v�lida de responsable actualiza carga y pasa a EN_REVISION
-[RECHAZO-ASIGNACION] Responsable Ing. Silva sin cupo disponible (2/2).
-[PASS] CP-05: Rechazo de asignaci�n cuando el responsable no tiene cupo disponible
-[RECHAZO-ASIGNACION] El �rea 'Departamento de Alumnos' no gestiona solicitudes de tipo EXCEPCION.
-[PASS] CP-06: Rechazo de asignaci�n por incompatibilidad de �rea administrativa
-[PASS] CP-07: Transici�n v�lida de EN_REVISION a APROBADA registra observaciones
-[TRANSICION-INVALIDA] La solicitud SOL-08 debe pasar por EN_REVISION antes de resolverse.
-[TRANSICION-INVALIDA] La solicitud SOL-08 ya se encuentra cerrada (RECHAZADA).
-[PASS] CP-08: Bloqueo de transiciones inv�lidas (solicitud cerrada o sin revisi�n previa)
-[PASS] CP-09: C�lculo de plazos SLA (normal y urgente) y detecci�n de vencimiento
-[PASS] CP-10: Filtrado combinado y validaciones defensivas (Guard Clauses)
-
---------------------------------------------------------------------------------
-RESUMEN DE EJECUCI�N: 10/10 pruebas superadas exitosamente (100% PASS)
-================================================================================
+================================================================================
+     SUITE DE PRUEBAS AUTOMATIZADAS DE VERIFICACIÓN — SGA (TPI MS II)           
+================================================================================
+
+[PASS] CP-01: Registro estándar conserva prioridad base y estado PENDIENTE
+[PASS] CP-02: Prioridad ALTA automática por mérito académico (>=20 mat y prom >=8.0)
+[PASS] CP-03: Escalamiento de prioridad en solicitud urgente (BAJA -> MEDIA)
+[PASS] CP-04: Asignación válida de responsable actualiza carga y pasa a EN_REVISION
+[RECHAZO-ASIGNACION] Responsable Ing. Silva sin cupo disponible (2/2).
+[PASS] CP-05: Rechazo de asignación cuando el responsable no tiene cupo disponible
+[RECHAZO-ASIGNACION] El área 'Departamento de Alumnos' no gestiona solicitudes de tipo EXCEPCION.
+[PASS] CP-06: Rechazo de asignación por incompatibilidad de área administrativa
+[PASS] CP-07: Transición válida de EN_REVISION a APROBADA registra observaciones
+[TRANSICION-INVALIDA] La solicitud SOL-08 debe pasar por EN_REVISION antes de resolverse.
+[TRANSICION-INVALIDA] La solicitud SOL-08 ya se encuentra cerrada (RECHAZADA).
+[PASS] CP-08: Bloqueo de transiciones inválidas (solicitud cerrada o sin revisión previa)
+[PASS] CP-09: Cálculo de plazos SLA (normal y urgente) y detección de vencimiento
+[PASS] CP-10: Filtrado combinado y validaciones defensivas (Guard Clauses)
+[TRANSICION-INVALIDA] La solicitud SOL-11 no puede pasar de PENDIENTE a EN_REVISION (EN_REVISION solo se alcanza al asignar un responsable).
+[TRANSICION-INVALIDA] La solicitud SOL-11 debe pasar por EN_REVISION antes de resolverse.
+[PASS] CP-11: PENDIENTE no pasa a EN_REVISION manualmente sin asignar responsable
+[RECHAZO-ASIGNACION] La solicitud SOL-12 ya está asignada a Ing. Silva.
+[PASS] CP-12: Reasignación libera la carga del responsable anterior
+[RECHAZO-ASIGNACION] La solicitud SOL-13 ya se encuentra cerrada (APROBADA).
+[PASS] CP-13: Rechazo de asignación sobre solicitud cerrada sin consumir cupo
+[PASS] CP-14: Rechazo de registro con ID de solicitud duplicado
+
+--------------------------------------------------------------------------------
+RESUMEN DE EJECUCIÓN: 14/14 pruebas superadas exitosamente (100% PASS)
+================================================================================

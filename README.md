@@ -39,7 +39,7 @@ El **Sistema de Gestión de Solicitudes Académicas (SGA)** modela el circuito a
 tpi_ms2/
 ├── src/sga/
 │   ├── Main.java                          # Demostración integral de las 5 operaciones funcionales
-│   ├── PruebasVerificacionSistema.java    # Suite de 10 pruebas automatizadas en memoria (10/10 PASS)
+│   ├── PruebasVerificacionSistema.java    # Suite de 14 pruebas automatizadas en memoria (14/14 PASS)
 │   ├── GestorSolicitudes.java             # Servicio de aplicación refactorizado (SRP, DIP, Clean Code)
 │   ├── GeneradorReporteSolicitudes.java   # Constructor de reportes y estadísticas de SLA (SRP)
 │   ├── Solicitud.java                     # Entidad raíz rica del dominio (Move Method, Guard Clauses)
@@ -59,11 +59,12 @@ tpi_ms2/
 │   └── NotificacionWhatsApp.java          # Estrategia concreta de envío por WhatsApp
 ├── docs/
 │   ├── 01-diagnostico-calidad-y-smells.md # Etapas 1, 2 y 3: Calidad externa/interna y 10 code smells
-│   ├── 02-pruebas-y-verificacion.md       # Etapa 6: Matriz de 10 casos de prueba y no-regresión
+│   ├── 02-pruebas-y-verificacion.md       # Etapa 6: Matriz de 14 casos de prueba y no-regresión
 │   ├── 03-solid-clean-code-y-refactorings.md # Etapas 4 y 5: SOLID, Clean Code y 6 refactorings seguros
 │   ├── 04-checklist-code-review.md        # Etapa 7: Checklist técnico de 12 puntos y revisión de PR
 │   ├── 05-bitacora-uso-ia-y-prompts.md    # Declaración metodológica y registro detallado de prompts IA
 │   ├── 06-adr-decisiones-arquitectura.md  # Architecture Decision Records (ADR-001 a ADR-003)
+│   ├── 07-conclusiones.md                 # Etapa 8: Conclusiones grupales e individuales y mejoras futuras
 │   ├── diagramas/                         # Diagramas UML (antes y después) y gráfico de métricas
 │   └── evidencias/                        # Código inicial, salidas comparativas y capturas de ejecución
 ├── solicitudes_db.csv                     # Base de datos CSV generada por la ejecución del sistema
@@ -83,6 +84,7 @@ El repositorio cuenta con los tags obligatorios exigidos por la consigna oficial
 | `etapa-refactoring` | **Etapas 4 y 5** | Aplicación de principios SOLID (*SRP, OCP, LSP, ISP, DIP*), *Clean Code* y 6 refactorings seguros (*Introduce Parameter Object*, *Extract Method*, *Move Method*, *Replace Type Code with Enum*, *Extract Interface/Class*, *Guard Clauses*). |
 | `etapa-pruebas` | **Etapa 6** | Incorporación de la suite `PruebasVerificacionSistema.java` (10 casos automatizados) y verificación de equivalencia 100% antes/después. |
 | `etapa-docs` | **Etapas 7 y 8** | Checklist de *Code Review* profesional, ADRs, diagramas UML comparativos y bitácora de uso de IA. |
+| *(rama `fix/code-review-iteracion-3`)* | **Etapas 6, 7 y 8** | Iteración 3 del *Code Review*: corrección de 4 defectos de reglas de negocio, 4 pruebas nuevas (14/14 PASS) y conclusiones (`07-conclusiones.md`). |
 | `estadorefactorizado` | **Versión Final Refactorizada** | Entrega final integrada, limpia, documentada y verificada (también etiquetada como `estado-refactorizado`). |
 
 ### Cómo comparar la versión inicial y la versión refactorizada

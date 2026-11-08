@@ -40,11 +40,36 @@ Se elaboró y aplicó el siguiente **Checklist de Revisión Técnica** sobre el 
 > **Veredicto Final:** ✅ **Aprobado para Merge (`estadorefactorizado`)**  
 > Se verificó que las 4 observaciones bloqueantes y de alta prioridad fueron resueltas en commits atómicos, manteniendo el 100% de equivalencia en la salida funcional de `Main` y alcanzando **10/10 pruebas automatizadas exitosas** en `PruebasVerificacionSistema`.
 
+### Iteración 3 — Revisión de reglas de negocio sobre `estadorefactorizado` (Estado: ⚠️ *Changes Requested* → ✅ *Approved*)
+> **PR: `fix/code-review-iteracion-3` → `main`**  
+> **Autor de las correcciones:** Roques Zeballos, Juan Martín  
+> **Revisor:** Ruidiaz, Emanuel Facundo  
+>
+> **Motivo de la revisión:** Las iteraciones 1 y 2 se centraron en la estructura interna (SOLID, Clean Code, DRY). En esta revisión se recorrieron los caminos alternativos de cada caso de uso, incluso los que el escenario de `Main` no ejercita, y se encontró que el punto 10 del checklist (**Robustez**) estaba aprobado sin cubrir algunas invariantes del dominio.
+>
+> **Hallazgos y correcciones:**
+> 1. **[BLOQUEANTE - Regla de negocio] Resolución sin revisión real** (`EstadoSolicitud.puedeTransicionarA`): se permitía `PENDIENTE → EN_REVISION` mediante `cambiarEstadoSolicitud`, sin asignar responsable, y luego aprobar la solicitud. Además, `Main` invocaba `getResponsable().getNombre()`, que lanzaría `NullPointerException` en ese escenario.  
+>    **Corrección:** la única transición manual permitida es `EN_REVISION → APROBADA/RECHAZADA`; `EN_REVISION` solo se alcanza al asignar responsable. `GestorSolicitudes` informa el rechazo con `[TRANSICION-INVALIDA]` y `Main` usa `getNombreResponsableAsignado()`. **Prueba:** CP-11.
+> 2. **[ALTA - Integridad] Carga operativa inconsistente al reasignar** (`Solicitud.asignarResponsable`): al reasignar se incrementaba la carga del nuevo responsable sin liberar la del anterior; reasignar al mismo responsable duplicaba su carga; y se podía asignar responsable a una solicitud ya cerrada, consumiendo cupo.  
+>    **Corrección:** nuevo método `Responsable.liberarCargaOperativa()`; `Solicitud` y `GestorSolicitudes` rechazan asignaciones sobre solicitudes cerradas y reasignaciones al mismo responsable. **Pruebas:** CP-12 y CP-13.
+> 3. **[ALTA - Integridad] IDs de solicitud duplicados** (`RepositorioSolicitudes*.guardar`): se aceptaban dos solicitudes con el mismo ID y `buscarPorId` devolvía siempre la primera.  
+>    **Corrección:** ambas implementaciones (archivo y memoria) lanzan `IllegalStateException` ante un ID existente, manteniendo el mismo contrato (LSP); el registro rechazado no se notifica. **Prueba:** CP-14.
+> 4. **[MEDIA - Confiabilidad de la evidencia] Resumen de pruebas fijo** (`PruebasVerificacionSistema`): el resumen imprimía siempre `(100% PASS)` aunque fallaran casos.  
+>    **Corrección:** el porcentaje se calcula a partir de las pruebas ejecutadas y superadas.
+>
+> **Veredicto Final:** ✅ **Aprobado** — `14/14` pruebas `PASS` y salida de `Main` + `solicitudes_db.csv` idénticas a las evidencias previas (sin regresiones en el comportamiento externo).
+>
+> **Observaciones registradas como deuda técnica pendiente (no bloqueantes):**
+> - `RepositorioSolicitudesArchivo` solo escribe el CSV y no lo lee al iniciar, por lo que no hay persistencia real entre ejecuciones; tampoco escapa el separador `;` en textos libres.
+> - `GestorSolicitudes` informa los rechazos con `System.out.println`; convendría devolver un resultado con el motivo para separar la presentación del servicio.
+> - El canal de notificación se intercambia con `setServicioNotificacion` antes de cada operación (acoplamiento temporal); podría asociarse un canal preferido a cada estudiante.
+> - Las áreas se comparan como `String` con tildes (`TipoSolicitud.esAreaCompatible`); un `enum Area` evitaría errores de tipeo.
+
 ---
 
 ## 3. Criterios de Aceptación Técnica (*Definition of Done*)
 Para dar por aceptada la evolución del módulo en la rama principal se verificó el cumplimiento estricto de los siguientes criterios:
 1. **Cero Regresiones Funcionales:** La comparación entre `salida_estado_inicial.txt` y `salida_estado_refactorizado.txt` no presenta diferencias.
-2. **Suite de Pruebas Verde:** `PruebasVerificacionSistema` ejecuta los 10 casos de prueba (nominales, bordes y excepciones) con resultado `10/10 PASS`.
+2. **Suite de Pruebas Verde:** `PruebasVerificacionSistema` ejecuta los 14 casos de prueba (nominales, bordes y excepciones; CP-11 a CP-14 agregados en la Iteración 3) con resultado `14/14 PASS`.
 3. **Cumplimiento del Checklist:** 12 de 12 puntos del checklist técnico en estado `SÍ`.
 4. **Cero Warnings de Compilación:** Compilación limpia con `javac -encoding UTF-8` en Java 21 LTS.

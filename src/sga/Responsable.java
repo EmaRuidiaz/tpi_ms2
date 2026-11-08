@@ -64,6 +64,16 @@ public class Responsable {
         this.cargaActual++;
     }
 
+    /**
+     * Libera una unidad de carga cuando una solicitud se reasigna a otro responsable.
+     */
+    public void liberarCargaOperativa() {
+        if (this.cargaActual == 0) {
+            throw new IllegalStateException("El responsable no posee carga operativa para liberar.");
+        }
+        this.cargaActual--;
+    }
+
     public String getId() {
         return id;
     }

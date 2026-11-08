@@ -17,6 +17,9 @@ public class RepositorioSolicitudesMemoria implements RepositorioSolicitudes {
         if (solicitud == null) {
             throw new IllegalArgumentException("No se puede guardar una solicitud nula.");
         }
+        if (buscarPorId(solicitud.getId()) != null) {
+            throw new IllegalStateException("Ya existe una solicitud registrada con el ID " + solicitud.getId() + ".");
+        }
         solicitudes.add(solicitud);
     }
 

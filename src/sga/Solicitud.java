@@ -88,8 +88,17 @@ public class Solicitud {
         if (nuevoResponsable == null) {
             throw new IllegalArgumentException("El responsable a asignar no puede ser nulo.");
         }
-        this.responsable = nuevoResponsable;
+        if (this.estado.estaCerrada()) {
+            throw new IllegalStateException("No se puede asignar un responsable a una solicitud cerrada (" + this.estado + ").");
+        }
+        if (nuevoResponsable == this.responsable) {
+            throw new IllegalStateException("La solicitud ya se encuentra asignada a " + nuevoResponsable.getNombre() + ".");
+        }
         nuevoResponsable.incrementarCargaOperativa();
+        if (this.responsable != null) {
+            this.responsable.liberarCargaOperativa();
+        }
+        this.responsable = nuevoResponsable;
         if (this.estado == EstadoSolicitud.PENDIENTE) {
             this.estado = EstadoSolicitud.EN_REVISION;
         }

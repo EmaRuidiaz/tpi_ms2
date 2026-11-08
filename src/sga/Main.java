@@ -99,7 +99,7 @@ public class Main {
         System.out.println("Solicitudes encontradas en estado EN_REVISION: " + filtroEnRevision.size());
         for (Solicitud s : filtroEnRevision) {
             System.out.println("  * " + s.getId() + " - " + s.getEstudiante().getNombre()
-                    + " (" + s.getTipo().name() + ") -> Responsable: " + s.getResponsable().getNombre());
+                    + " (" + s.getTipo().name() + ") -> Responsable: " + s.getNombreResponsableAsignado());
         }
 
         System.out.println("\n--- 5. REPORTE GENERAL Y CONTROL DE SLA ---");
