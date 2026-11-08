@@ -17,10 +17,12 @@ public enum EstadoSolicitud {
         return this == PENDIENTE && (nuevoEstado == APROBADA || nuevoEstado == RECHAZADA);
     }
 
+    /**
+     * Transiciones manuales permitidas: únicamente EN_REVISION -> APROBADA / RECHAZADA.
+     * El paso PENDIENTE -> EN_REVISION solo ocurre al asignar un responsable
+     * (Solicitud.asignarResponsable), garantizando que toda solicitud resuelta fue revisada por alguien.
+     */
     public boolean puedeTransicionarA(EstadoSolicitud nuevoEstado) {
-        if (nuevoEstado == null || this.estaCerrada()) {
-            return false;
-        }
-        return !requiereRevisionPreviaPara(nuevoEstado);
+        return this == EN_REVISION && nuevoEstado != null && nuevoEstado.estaCerrada();
     }
 }
