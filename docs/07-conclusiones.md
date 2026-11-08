@@ -45,4 +45,6 @@ La IA aceleró la estructuración del diagnóstico y del plan de refactoring, pe
 _(completar)_
 
 ### Roques Zeballos, Juan Martín
-_(completar)_
+Mi aporte se concentró en el relevamiento de los code smells, el desacoplamiento de la infraestructura con SOLID (`RepositorioSolicitudes`, `ServicioNotificacion` y `GeneradorReporteSolicitudes`), los ADRs y el code review. El mayor aprendizaje fue entender en la práctica la diferencia entre calidad externa e interna: el sistema base "andaba", pero cualquier cambio obligaba a tocar una única clase gigante. Aplicar DIP no fue solo una cuestión de diseño prolijo: fue lo que hizo posible probar el sistema en memoria sin depender del archivo CSV.
+
+Lo más difícil, y lo que más me enseñó, fue la tercera iteración del code review. Con el checklist completo en "SÍ" y las pruebas en verde, revisé los caminos que la demostración no recorre y encontré cuatro defectos reales (por ejemplo, se podía aprobar una solicitud sin responsable asignado y el resumen de pruebas informaba 100% aunque algo fallara). Me quedó claro que un checklist aprobado no garantiza que las reglas de negocio estén protegidas, y que una prueba solo es evidencia si puede fallar de forma visible. Si empezara de nuevo, escribiría pruebas para los casos alternativos desde el primer refactoring, y no solo para el escenario principal.
