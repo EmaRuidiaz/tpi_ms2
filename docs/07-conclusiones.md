@@ -37,14 +37,21 @@ La IA aceleró la estructuración del diagnóstico y del plan de refactoring, pe
 
 ## 5. Conclusiones Individuales
 
-> ✍️ **Pendiente de redacción por cada integrante.** La consigna pide conclusiones individuales breves y propias: cada integrante debe escribir la suya con su experiencia real.
->
-> Preguntas guía: ¿Qué aprendiste que no sabías antes del TPI? ¿Qué parte te resultó más difícil y cómo la resolviste? ¿Qué harías distinto si empezaras de nuevo? ¿Con qué contenido de la materia se relaciona más lo que hiciste?
-
 ### Ruidiaz, Emanuel Facundo
-_(completar)_
+Trabajar sobre la refactorización paso a paso del módulo de Solicitudes Académicas me permitió dimensionar el valor real de técnicas como *Introduce Parameter Object*, *Replace Type Code with Enum* y *Move Method*. Pasar de un método `reg(...)` con 13 parámetros primitivos y lógica dispersa a entidades de dominio ricas que validan sus propias invariantes redujo drásticamente la complejidad cognitiva y facilitó escribir pruebas automatizadas rápidas.
+
+Además, al revisar el Pull Request de la tercera iteración de *Code Review* comprendí la importancia de evaluar no solo la estructura estática del código sino también las transiciones inválidas y los casos borde que el camino feliz de demostración no recorre. Si empezara de nuevo, diseñaría los objetos de parámetro y los tests de invariantes de negocio desde el primer momento antes de abordar los casos nominales.
 
 ### Roques Zeballos, Juan Martín
 Mi aporte se concentró en el relevamiento de los code smells, el desacoplamiento de la infraestructura con SOLID (`RepositorioSolicitudes`, `ServicioNotificacion` y `GeneradorReporteSolicitudes`), los ADRs y el code review. El mayor aprendizaje fue entender en la práctica la diferencia entre calidad externa e interna: el sistema base "andaba", pero cualquier cambio obligaba a tocar una única clase gigante. Aplicar DIP no fue solo una cuestión de diseño prolijo: fue lo que hizo posible probar el sistema en memoria sin depender del archivo CSV.
 
 Lo más difícil, y lo que más me enseñó, fue la tercera iteración del code review. Con el checklist completo en "SÍ" y las pruebas en verde, revisé los caminos que la demostración no recorre y encontré cuatro defectos reales (por ejemplo, se podía aprobar una solicitud sin responsable asignado y el resumen de pruebas informaba 100% aunque algo fallara). Me quedó claro que un checklist aprobado no garantiza que las reglas de negocio estén protegidas, y que una prueba solo es evidencia si puede fallar de forma visible. Si empezara de nuevo, escribiría pruebas para los casos alternativos desde el primer refactoring, y no solo para el escenario principal.
+
+---
+
+## 6. Enlaces Oficiales de Entrega y Video de Defensa
+- **Video de Defensa y Demostración (Google Drive):** [https://drive.google.com/file/d/1NTLajOwqr0HAIDRuz-5_TfOsEMSKWahB/view?usp=sharing](https://drive.google.com/file/d/1NTLajOwqr0HAIDRuz-5_TfOsEMSKWahB/view?usp=sharing)
+- **Repositorio GitHub Oficial:** [https://github.com/EmaRuidiaz/tpi_ms2](https://github.com/EmaRuidiaz/tpi_ms2)
+- **Tag Versión Inicial (`estado-inicial`):** [https://github.com/EmaRuidiaz/tpi_ms2/tree/estado-inicial](https://github.com/EmaRuidiaz/tpi_ms2/tree/estado-inicial)
+- **Tag Versión Final Refactorizada (`estadorefactorizado`):** [https://github.com/EmaRuidiaz/tpi_ms2/tree/estadorefactorizado](https://github.com/EmaRuidiaz/tpi_ms2/tree/estadorefactorizado)
+- **Pull Request — Iteración 3 del Code Review:** [https://github.com/EmaRuidiaz/tpi_ms2/pull/1](https://github.com/EmaRuidiaz/tpi_ms2/pull/1)

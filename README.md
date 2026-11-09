@@ -13,6 +13,16 @@
 
 ---
 
+## 🎥 Video de Defensa y Enlaces Oficiales de Entrega
+
+- **🎬 Video de Defensa y Demostración (Google Drive):** [https://drive.google.com/file/d/1NTLajOwqr0HAIDRuz-5_TfOsEMSKWahB/view?usp=sharing](https://drive.google.com/file/d/1NTLajOwqr0HAIDRuz-5_TfOsEMSKWahB/view?usp=sharing)
+- **📦 Repositorio Oficial (GitHub):** [https://github.com/EmaRuidiaz/tpi_ms2](https://github.com/EmaRuidiaz/tpi_ms2)
+- **🏷️ Tag Versión Inicial (`estado-inicial`):** [https://github.com/EmaRuidiaz/tpi_ms2/tree/estado-inicial](https://github.com/EmaRuidiaz/tpi_ms2/tree/estado-inicial)
+- **🏷️ Tag Versión Final Refactorizada (`estadorefactorizado`):** [https://github.com/EmaRuidiaz/tpi_ms2/tree/estadorefactorizado](https://github.com/EmaRuidiaz/tpi_ms2/tree/estadorefactorizado)
+- **🔍 Pull Request — Iteración 3 del Code Review:** [https://github.com/EmaRuidiaz/tpi_ms2/pull/1](https://github.com/EmaRuidiaz/tpi_ms2/pull/1)
+
+---
+
 ## 📌 Descripción del Caso de Estudio
 El **Sistema de Gestión de Solicitudes Académicas (SGA)** modela el circuito administrativo y académico de una facultad para gestionar trámites estudiantiles (**Equivalencias**, **Certificados**, **Excepciones de Correlatividad** y **Bajas Temporales**).
 
